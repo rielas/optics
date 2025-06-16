@@ -1,0 +1,20 @@
+[project]
+name = "fetcher"
+version = "0.1.0"
+description = "URL fetcher and HTML content saver"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "selenium>=4.33.0",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=8.4.0",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py", "*_test.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
