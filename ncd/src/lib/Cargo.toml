@@ -1,0 +1,12 @@
+[package]
+name = "core"
+version = "0.1.2"
+edition = "2021"
+
+[lib]
+name = "core"
+path = "lib.rs"
+
+[dependencies]
+brotli = { version = "7", features = ["std"] }
+scraper = "0.23"
