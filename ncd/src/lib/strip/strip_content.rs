@@ -6,15 +6,13 @@ struct StripContent {}
 impl StripHtml for StripContent {
     fn strip_element(&self, element: &ElementRef<'_>) -> String {
         let tag_name = element.value().name();
-        let void_element = if !element.has_children() { " /" } else { "" };
         let mut attributes = String::new();
 
         for (name, value) in element.value().attrs() {
-            if let Some(value) = element.attr(name) {
-                attributes.push_str(&format!(" {}=\"{}\"", name, value));
-            }
+            attributes.push_str(&format!(" {name}=\"{value}\""));
         }
 
+        let void_element = if element.has_children() { "" } else { " /" };
         format!("<{}{}{}>", tag_name, attributes, void_element)
     }
 }
