@@ -1,8 +1,8 @@
-mod strip_content;
+pub mod strip_content;
 
 use scraper::{ElementRef, Html};
 
-trait StripHtml {
+pub trait StripHtml {
     fn strip_html(&self, page: &str) -> String {
         let document = Html::parse_document(page);
         let mut result = String::new();

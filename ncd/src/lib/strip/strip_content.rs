@@ -1,7 +1,7 @@
 use super::StripHtml;
 use scraper::ElementRef;
 
-struct StripContent {}
+pub struct StripContent {}
 
 impl StripHtml for StripContent {
     fn strip_element(&self, element: &ElementRef<'_>) -> String {

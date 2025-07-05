@@ -1,0 +1,19 @@
+[package]
+name = "benchmark"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+name = "benchmark"
+path = "src/lib.rs"
+
+[[bin]]
+name = "benchmark"
+path = "src/main.rs"
+
+[dependencies]
+core = { path = "../src/lib" }
+plotters = { version = "0.3", default-features = false, features = [
+    "evcxr",
+    "all_series",
+] }

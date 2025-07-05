@@ -10,3 +10,6 @@ path = "lib.rs"
 [dependencies]
 brotli = { version = "8", features = ["std"] }
 scraper = "0.23"
+
+[dev-dependencies]
+assert_approx_eq = "1.1"

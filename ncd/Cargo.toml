@@ -1,5 +1,5 @@
 [workspace]
-members = ["src/lib"]
+members = ["src/lib", "brotli-benchmark"]
 resolver = "2"
 
 [profile.dev]
