@@ -5,7 +5,7 @@ edition = "2021"
 
 [lib]
 name = "benchmark"
-path = "src/lib.rs"
+path = "src/lib/mod.rs"
 
 [[bin]]
 name = "benchmark"
@@ -17,3 +17,6 @@ plotters = { version = "0.3", default-features = false, features = [
     "evcxr",
     "all_series",
 ] }
+plotly = "0.13"
+urlencoding = "2.1"
+rayon = "1.11"

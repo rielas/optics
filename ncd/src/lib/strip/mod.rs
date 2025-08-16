@@ -1,3 +1,4 @@
+pub mod filter_attributes;
 pub mod strip_content;
 
 use scraper::{ElementRef, Html};

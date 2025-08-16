@@ -5,9 +5,9 @@ use crate::compress::Compressor;
 use strip::StripHtml;
 
 pub fn calculate(page_a: &str, page_b: &str) -> f64 {
-    let strip_content = strip::strip_content::StripContent {};
-    let stripped_a = strip_content.strip_html(page_a);
-    let stripped_b = strip_content.strip_html(page_b);
+    let stripper = strip::filter_attributes::FilterAttributes {};
+    let stripped_a = stripper.strip_html(page_a);
+    let stripped_b = stripper.strip_html(page_b);
     let compressor = compress::brotli::CompressBrotli::recommended();
     compressor.get_distance(&stripped_a, &stripped_b)
 }

@@ -1,3 +1,5 @@
+pub mod dataset;
+
 extern crate plotters;
 
 use plotters::evcxr::SVGWrapper;

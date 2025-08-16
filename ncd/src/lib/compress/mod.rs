@@ -11,6 +11,10 @@ pub trait Compressor {
         let min = cmp::min(a_compressed, b_compressed);
         let max = cmp::max(a_compressed, b_compressed);
 
+        if length_combined < min {
+            return 0.0;
+        }
+
         (length_combined - min) as f64 / max as f64
     }
 
