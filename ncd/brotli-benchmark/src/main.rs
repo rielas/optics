@@ -1,3 +1,5 @@
+use benchmark::benchmarks::distance_matrix::heatmap;
+use benchmark::benchmarks::triangle_inequality;
 use benchmark::dataset;
 use core::calculate;
 use core::compress::{brotli::CompressBrotli, Compressor};
@@ -7,14 +9,6 @@ use plotly::{HeatMap, Layout, Plot};
 use rayon::prelude::*;
 use std::path::PathBuf;
 use std::time::{Duration, Instant};
-
-fn get_dataset_path(directory: &str) -> PathBuf {
-    let project_root = env!("CARGO_MANIFEST_DIR");
-    let full_path = std::path::Path::new(project_root)
-        .join("../../dataset")
-        .join(directory);
-    full_path
-}
 
 fn read_from_file(file_path: &str) -> String {
     let project_root = env!("CARGO_MANIFEST_DIR");
@@ -61,67 +55,20 @@ fn same_page() {
     }
 }
 
-fn heatmap(dataset_name: &str) {
-    let dataset =
-        dataset::Dataset::new(get_dataset_path(dataset_name)).expect("Failed to load dataset");
-    let entries = dataset.entries();
-    let page_names = entries
-        .iter()
-        .map(|entry| entry.get_name())
-        .collect::<Vec<String>>();
-
-    let heatmap = HeatMap::new(
-        page_names.clone(),
-        page_names.clone(),
-        entries
-            .par_iter()
-            .map(|entry_a| {
-                entries
-                    .iter()
-                    .map(|entry_b| {
-                        println!(
-                            "Calculating distance between {} and {}",
-                            entry_a.url, entry_b.url
-                        );
-                        calculate(
-                            &entry_a.get_content().unwrap(),
-                            &entry_b.get_content().unwrap(),
-                        )
-                    })
-                    .collect::<Vec<f64>>()
-            })
-            .collect::<Vec<Vec<f64>>>(),
-    );
-
-    let mut plot = Plot::new();
-    plot.add_trace(heatmap);
-
-    let layout = Layout::new()
-        .title(format!("Normalized Compression Distance for {}", dataset_name))
-        .width(800)
-        .height(800)
-        .x_axis(
-            Axis::new()
-                .title(Title::with_text("Page A"))
-                .side(AxisSide::Bottom)
-                .auto_margin(true)
-                .tick_angle(-90.0)
-                .tick_text(page_names.clone()),
-        )
-        .y_axis(
-            Axis::new()
-                .title("Page B")
-                .scale_anchor("x")
-                .auto_margin(true)
-                .tick_text(page_names.clone()),
-        );
-    plot.set_layout(layout);
-
-    plot.show();
-}
-
 fn main() {
     println!("NCD Brotli Benchmark");
-    //same_page();
-    heatmap("euronews.com");
+    same_page();
+
+    let cache = &mut benchmark::benchmarks::Cache::new();
+
+    for dataset in ["euronews.com", "amazon", "imdb", "wikipedia"] {
+        heatmap(cache, dataset);
+        triangle_inequality::triangle_inequality(cache, dataset);
+    }
+}
+
+#[test]
+fn test_heatmap() {
+    let mut cache = benchmark::benchmarks::Cache::new();
+    heatmap(&mut cache, "euronews.com");
 }

@@ -155,6 +155,13 @@ impl Dataset {
     pub fn entries(&self) -> &Vec<Entry> {
         &self.entries
     }
+
+    pub fn get_content(&self, url: &str) -> Option<String> {
+        self.entries
+            .iter()
+            .find(|entry| entry.url == url)
+            .and_then(|entry| fs::read_to_string(&entry.filepath).ok())
+    }
 }
 
 #[cfg(test)]
@@ -173,7 +180,7 @@ mod tests {
 
     #[test]
     fn test_get_file_index() {
-        let dataset = Dataset::new(get_dataset_path("euronews")).unwrap();
+        let dataset = Dataset::new(get_dataset_path("euronews.com")).unwrap();
         let entries = dataset.entries();
 
         for entry in entries {

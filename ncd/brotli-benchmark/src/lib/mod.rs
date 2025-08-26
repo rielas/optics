@@ -1,3 +1,4 @@
+pub mod benchmarks;
 pub mod dataset;
 
 extern crate plotters;

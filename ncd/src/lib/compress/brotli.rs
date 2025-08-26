@@ -2,7 +2,7 @@ use crate::compress::Compressor;
 
 use std::io::{BufWriter, Write};
 
-const QUALITY: u32 = 4;
+const QUALITY: u32 = 5;
 const LG_WINDOW_SIZE: u32 = 21;
 
 pub struct CompressBrotli {
